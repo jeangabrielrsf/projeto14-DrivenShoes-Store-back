@@ -1,13 +1,15 @@
 import express from "express";
 import cors from "cors";
 import {
-  createParticipant,
-  Login,
+	createParticipant,
+	Login,
 } from "./controllers/participant.controller.js";
+import router from "./routes/index.js";
 
 const app = express();
-
-app.use([cors(), express.json()]);
+app.use(express.json());
+app.use(cors());
+app.use(router);
 
 //===============ROTAS DE PARTICIPANTES====================
 
@@ -19,8 +21,9 @@ app.post("/", Login);
 //localhost:5000/sign-up
 app.post("/sign-up", createParticipant);
 
-
-
-
+app.get("/status", (req, res) => {
+	console.log("GET /status...");
+	res.status(statusCodes.OK).send("Tudo OK");
+});
 
 app.listen(5000, () => console.log("Listening on port 5000..."));
