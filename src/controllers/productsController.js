@@ -1,6 +1,7 @@
 import db from "../db/db.js";
 import collections from "../enums/collections.js";
 import statusCodes from "../enums/statusCodes.js";
+import { ObjectId } from "mongodb";
 
 async function listProducts(req, res) {
 	try {
@@ -28,4 +29,19 @@ async function insertProduct(req, res) {
 	}
 }
 
-export { listProducts, insertProduct };
+async function getInfoProduct(req, res) {
+	try {
+		const { PRODUCT_ID } = req.params;
+
+		const productInfo = await db
+			.collection(collections.PRODUCTS)
+			.findOne({ _id: ObjectId(PRODUCT_ID) });
+
+		return res.send(productInfo);
+	} catch (error) {
+		console.log(error);
+		return res.sendStatus(500);
+	}
+}
+
+export { listProducts, insertProduct, getInfoProduct };

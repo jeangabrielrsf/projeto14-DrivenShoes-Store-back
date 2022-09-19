@@ -24,14 +24,16 @@ async function Login(req, res) {
 
 	try {
 		const user = await db.collection("users").findOne({ email: email });
-		//  const isValid = bcrypt.compareSync(password, user.password);
+		console.log(user);
 
-		//  if (!isValid) {
-		//    return res.sendStatus(401);
-		//  }
+		const isValid = bcrypt.compareSync(password, user.password);
+
+		if (!isValid) {
+			return res.sendStatus(401);
+		}
 
 		const token = uuidv4();
-		db.collection("sessions").insertOne({
+		await db.collection("sessions").insertOne({
 			token,
 			userId: user._id,
 		});
