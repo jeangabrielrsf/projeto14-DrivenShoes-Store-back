@@ -15,7 +15,7 @@ app.use(router);
 
 // SIGN IN ENTRAR
 //Se o login for feito com sucesso, você tem um token
-app.post("/", Login);
+app.post("/login", Login);
 
 //SIGN UP INSCREVER-SE, login e senha
 //localhost:5000/sign-up
