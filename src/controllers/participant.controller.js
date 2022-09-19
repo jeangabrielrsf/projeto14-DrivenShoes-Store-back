@@ -15,7 +15,7 @@ export const participantSchema = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
-async function Login(req, res) {
+async function login(req, res) {
 	const { email, password } = req.body;
 	console.log(email, password, "são email e password");
 	if (!email || !password) {
@@ -41,7 +41,7 @@ async function Login(req, res) {
 		return res.send({ token, name: user.name });
 	} catch (error) {
 		console.error(error);
-		res.sendStatus(500);
+		res.status(500).send({ message: "Deu ruim no login" });
 	}
 }
 
@@ -64,9 +64,10 @@ async function createParticipant(req, res) {
 		})();
 		return res.sendStatus(201);
 	} catch (error) {
+		console.log("deu ruim aí irmao");
 		console.error(error);
 		return res.status(500).send("Não criou");
 	}
 }
 
-export { createParticipant, Login };
+export { createParticipant, login };

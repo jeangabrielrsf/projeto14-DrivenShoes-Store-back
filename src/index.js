@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import {
 	createParticipant,
-	Login,
+	login,
 } from "./controllers/participant.controller.js";
 import router from "./routes/index.js";
 
@@ -15,7 +15,7 @@ app.use(router);
 
 // SIGN IN ENTRAR
 //Se o login for feito com sucesso, você tem um token
-app.post("/login", Login);
+app.post("/login", login);
 
 //SIGN UP INSCREVER-SE, login e senha
 //localhost:5000/sign-up
