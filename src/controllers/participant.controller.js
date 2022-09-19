@@ -53,15 +53,13 @@ async function createParticipant(req, res) {
 		}
 	}
 	try {
-		const formato = (() => {
-			bcrypt.hash(senha, 10, async (err, hash) => {
-				await db.collection("users").insertOne({
-					email,
-					name: nome,
-					password: hash,
-				});
-			});
-		})();
+		const cryptedPassword = bcrypt.hashSync(senha, 10);
+
+		await db.collection("users").insertOne({
+			email,
+			name: nome,
+			password: cryptedPassword,
+		});
 		return res.sendStatus(201);
 	} catch (error) {
 		console.log("deu ruim aí irmao");
